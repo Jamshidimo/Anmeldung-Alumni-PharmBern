@@ -689,7 +689,7 @@
    *
    *     function doPost(e) {
    *       var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-   *       var data = JSON.parse(e.postData.contents);
+   *       var data = e.parameter;
    *       sheet.appendRow([
    *         new Date().toLocaleString('de-CH'),
    *         data.vorname,
@@ -791,11 +791,14 @@
 
     if (GOOGLE_SCRIPT_URL) {
       try {
+        const params = new URLSearchParams();
+        for (const key in formData) {
+          params.append(key, formData[key]);
+        }
         await fetch(GOOGLE_SCRIPT_URL, {
           method: 'POST',
           mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
+          body: params
         });
         showSuccess();
       } catch (err) {
