@@ -554,7 +554,7 @@
 <div class="form-container">
   <div class="form-card">
 
-    <div class="setup-banner" id="setupBanner">
+    <div class="setup-banner" id="setupBanner" style="display:none;">
       <strong>⚙️ Setup nötig:</strong> Um die Daten in Google Sheets zu speichern, erstelle ein Google Apps Script mit der URL unten im Code (Anleitung im Quellcode). Solange kein Script eingerichtet ist, werden die Daten nur in der Konsole angezeigt.
     </div>
 
@@ -647,7 +647,7 @@
       <div class="form-divider"></div>
 
       <div class="form-group">
-        <label class="checkbox-group" id="einwilligungGroup" onclick="toggleCheckbox(this)">
+        <label class="checkbox-group" id="einwilligungGroup" onclick="toggleCheckbox(event, this)">
           <input type="checkbox" id="einwilligung" name="einwilligung" required>
           <span class="checkbox-label">Ich bin damit einverstanden, per E-Mail über Aktivitäten und Veranstaltungen von Alumni PharmBern informiert zu werden. <span class="required">*</span></span>
         </label>
@@ -718,6 +718,11 @@
   // ← HIER DEINE GOOGLE APPS SCRIPT URL EINFÜGEN:
   const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwusR5OlNU2WVze4RDu0V_7yg-Q6imWemd21VKZOluZfndToB5eTSBEhofZ4VxWKo6H/exec';
 
+  // Show setup banner only if no Google Script URL is configured
+  if (!GOOGLE_SCRIPT_URL) {
+    document.getElementById('setupBanner').style.display = 'block';
+  }
+
   // Radio selection
   function selectRadio(label) {
     label.closest('.radio-group').querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
@@ -726,7 +731,8 @@
   }
 
   // Checkbox toggle
-  function toggleCheckbox(group) {
+  function toggleCheckbox(e, group) {
+    e.preventDefault();
     const cb = group.querySelector('input[type="checkbox"]');
     cb.checked = !cb.checked;
     group.classList.toggle('checked', cb.checked);
