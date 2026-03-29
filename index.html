@@ -803,9 +803,11 @@
 
   // Checkbox toggle
   function toggleCheckbox(e, group) {
-    e.preventDefault();
     const cb = group.querySelector('input[type="checkbox"]');
-    cb.checked = !cb.checked;
+    if (e.target !== cb) {
+      e.preventDefault();
+      cb.checked = !cb.checked;
+    }
     group.classList.toggle('checked', cb.checked);
   }
 
