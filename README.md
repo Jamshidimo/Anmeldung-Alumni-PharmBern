@@ -1,1 +1,1 @@
-https://github.com/Jamshidimo/Anmeldung-Alumni-PharmBern
+https://jamshidimo.github.io/Anmeldung-Alumni-PharmBern/
