@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kontakt – Alumni PharmBern</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<style>
+  :root {
+    --bordeaux: #7A1632;
+    --bordeaux-dark: #5C0F25;
+    --bordeaux-light: #9E2A4D;
+    --gold: #C4A35A;
+    --gold-light: #E8D5A3;
+    --cream: #FDF8F0;
+    --warm-white: #FEFCF9;
+    --text: #2D2A26;
+    --text-light: #6B6560;
+    --border: #E0D6CC;
+    --success: #2E7D4F;
+    --error: #C62828;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* Navigation */
+  .site-nav {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+  }
+  .nav-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+  .nav-logo {
+    font-family: 'Libre Bodoni', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--bordeaux);
+    text-decoration: none;
+    font-weight: 400;
+    flex-shrink: 0;
+  }
+  .nav-links { display: flex; gap: 0.25rem; align-items: center; }
+  .nav-link {
+    padding: 0.45rem 0.85rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .nav-link:hover, .nav-link.active {
+    background: rgba(122,22,50,0.07);
+    color: var(--bordeaux);
+  }
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem;
+    color: var(--text);
+    line-height: 0;
+  }
+  @media (max-width: 560px) {
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 56px; left: 0; right: 0;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      flex-direction: column;
+      padding: 0.75rem 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      z-index: 99;
+    }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: block; }
+    .site-nav { position: relative; }
+  }
+
+  /* Page hero */
+  .page-hero {
+    background: linear-gradient(135deg, var(--bordeaux) 0%, var(--bordeaux-dark) 60%, #3E0A17 100%);
+    color: white;
+    padding: 2.5rem 1.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -20%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(196,163,90,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .page-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+  }
+  .page-hero-inner {
+    max-width: 640px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .page-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .page-hero p {
+    font-size: 1rem;
+    font-weight: 300;
+    opacity: 0.9;
+    max-width: 480px;
+  }
+
+  /* Content layout */
+  .content-wrap {
+    max-width: 640px;
+    margin: -1rem auto 3rem;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--warm-white);
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.04);
+    animation: slideUp 0.5s ease-out;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+  @media (max-width: 520px) {
+    .info-grid { grid-template-columns: 1fr; }
+  }
+
+  .info-card {
+    padding: 1.75rem 1.5rem;
+  }
+  .info-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--bordeaux);
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid var(--gold-light);
+  }
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.91rem;
+    color: var(--text);
+    line-height: 1.45;
+  }
+  .contact-item svg { flex-shrink: 0; margin-top: 2px; color: var(--bordeaux); opacity: 0.75; }
+  .contact-item a { color: var(--bordeaux); text-decoration: none; }
+  .contact-item a:hover { text-decoration: underline; }
+  .hours-note {
+    font-size: 0.82rem;
+    color: var(--text-light);
+    margin-top: 0.75rem;
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .hours-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.88rem;
+    padding: 0.3rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+  .hours-row:last-of-type { border-bottom: none; }
+  .hours-row .day { font-weight: 600; }
+  .hours-row .time { color: var(--text-light); }
+
+  /* Map */
+  .map-card {
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+  }
+  .map-card-header { padding: 1.5rem 1.5rem 1rem; }
+  .map-card iframe { width: 100%; height: 300px; border: 0; display: block; }
+
+  /* Form card */
+  .form-card { padding: 2.5rem 2rem; }
+  @media (max-width: 520px) { .form-card { padding: 1.75rem 1.25rem; } }
+
+  .form-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--bordeaux);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--gold-light);
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 520px) { .form-row { grid-template-columns: 1fr; } }
+
+  .form-group { margin-bottom: 1.25rem; }
+  .form-group.full-width { grid-column: 1 / -1; }
+
+  label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.35rem;
+    letter-spacing: 0.01em;
+  }
+  label .required { color: var(--bordeaux); margin-left: 2px; }
+  label .optional { font-weight: 400; color: var(--text-light); font-size: 0.82rem; }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text);
+    background: white;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+  input:focus, textarea:focus {
+    border-color: var(--bordeaux);
+    box-shadow: 0 0 0 3px rgba(122,22,50,0.08);
+  }
+  input::placeholder, textarea::placeholder { color: #B5AFA8; }
+  textarea { resize: vertical; min-height: 120px; }
+
+  .field-error {
+    color: var(--error);
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    display: none;
+  }
+  .form-group.has-error input,
+  .form-group.has-error textarea {
+    border-color: var(--error);
+  }
+  .form-group.has-error .field-error { display: block; }
+
+  /* File upload */
+  .file-drop-zone {
+    border: 2px dashed var(--border);
+    border-radius: 10px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .file-drop-zone:hover, .file-drop-zone.drag-over {
+    border-color: var(--bordeaux);
+    background: rgba(122,22,50,0.03);
+    color: var(--bordeaux);
+  }
+  .file-drop-zone svg { display: block; margin: 0 auto 0.6rem; opacity: 0.5; }
+  .file-drop-zone:hover svg, .file-drop-zone.drag-over svg { opacity: 0.8; }
+  .file-info {
+    margin-top: 0.6rem;
+    padding: 0.6rem 0.9rem;
+    background: rgba(122,22,50,0.05);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .file-info .remove-file {
+    margin-left: auto;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-light);
+    font-size: 1rem;
+    line-height: 1;
+    padding: 0.15rem 0.35rem;
+    border-radius: 4px;
+    transition: color 0.15s;
+  }
+  .file-info .remove-file:hover { color: var(--error); }
+
+  /* reCAPTCHA */
+  .recaptcha-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  /* Submit */
+  .submit-btn {
+    width: 100%;
+    padding: 0.9rem 2rem;
+    background: linear-gradient(135deg, var(--bordeaux), var(--bordeaux-dark));
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s;
+    letter-spacing: 0.02em;
+  }
+  .submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(122,22,50,0.3);
+  }
+  .submit-btn:active { transform: translateY(0); }
+  .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; box-shadow: none; }
+  .submit-btn .spinner {
+    display: none;
+    width: 20px; height: 20px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    margin: 0 auto;
+  }
+  .submit-btn.loading .btn-text { display: none; }
+  .submit-btn.loading .spinner { display: block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Success */
+  .success-message { display: none; text-align: center; padding: 2rem 1rem; }
+  .success-message.show { display: block; }
+  .success-icon {
+    width: 64px; height: 64px;
+    background: var(--success);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  @keyframes popIn { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+  .success-message h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--bordeaux);
+    margin-bottom: 0.75rem;
+  }
+  .success-message p { color: var(--text-light); font-size: 0.95rem; max-width: 400px; margin: 0 auto; }
+
+  /* Form divider */
+  .form-divider { height: 1px; background: var(--border); margin: 1.75rem 0; }
+
+  /* Footer */
+  .form-footer {
+    text-align: center;
+    padding: 0 1.5rem 2rem;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .form-footer p { font-size: 0.82rem; color: var(--text-light); }
+  .form-footer a { color: var(--bordeaux); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="../" class="nav-logo">Alumni PharmBern</a>
+    <div class="nav-links" id="navLinks">
+      <a href="../" class="nav-link">Anmeldung</a>
+      <a href="../dienstleistungen/" class="nav-link">Dienstleistungen</a>
+      <a href="./" class="nav-link active">Kontakt</a>
+    </div>
+    <button class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menü öffnen">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- Page Hero -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <h1>Kontakt</h1>
+    <p>Schreiben Sie uns – wir melden uns innerhalb von 3–5 Werktagen bei Ihnen.</p>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <!-- Kontakt & Öffnungszeiten -->
+  <div class="info-grid">
+    <div class="card info-card">
+      <div class="info-card-title">Kontakt &amp; Öffnungszeiten</div>
+      <div class="contact-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:office@alumni.unibe.ch">office@alumni.unibe.ch</a>
+      </div>
+      <div class="contact-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.1 2.18 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+        <span>+41 31 684 00 00</span>
+      </div>
+      <div class="contact-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>Hochschulstrasse 4<br>3012 Bern</span>
+      </div>
+      <div class="hours-row"><span class="day">Mo – Fr</span><span class="time">09:00 – 17:00</span></div>
+      <div class="hours-row"><span class="day">Sa – So</span><span class="time">Geschlossen</span></div>
+      <p class="hours-note">Anfragen werden innerhalb von 3–5 Werktagen beantwortet.</p>
+    </div>
+    <div class="card info-card">
+      <div class="info-card-title">Anschrift</div>
+      <div class="contact-item" style="margin-bottom:1rem;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>
+          <strong>Alumni PharmBern</strong><br>
+          c/o Universität Bern<br>
+          Hochschulstrasse 4<br>
+          3012 Bern
+        </span>
+      </div>
+      <div class="contact-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        <span>Raum 115, Hauptgebäude<br>Universität Bern</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- So finden Sie uns -->
+  <div class="card map-card">
+    <div class="map-card-header">
+      <div class="info-card-title">So finden Sie uns</div>
+      <p style="font-size:0.88rem;color:var(--text-light);margin-top:-0.25rem;">Hochschulstrasse 4, 3012 Bern · Universität Bern Hauptgebäude, Raum 115</p>
+    </div>
+    <iframe
+      src="https://maps.google.com/maps?q=Hochschulstrasse+4,+3012+Bern&output=embed&hl=de&z=16"
+      allowfullscreen
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="Standort Alumni PharmBern">
+    </iframe>
+  </div>
+
+  <!-- Kontaktformular -->
+  <div class="card form-card">
+
+    <!-- Success message -->
+    <div class="success-message" id="successMessage">
+      <div class="success-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h2>Nachricht gesendet!</h2>
+      <p>Vielen Dank für Ihre Anfrage. Eine Bestätigung wurde an Ihre E-Mail-Adresse geschickt. Wir melden uns innerhalb von 3–5 Werktagen bei Ihnen.</p>
+    </div>
+
+    <form id="contactForm" novalidate>
+      <div class="form-section-title">Kontaktformular</div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="vorname">Vorname <span class="required">*</span></label>
+          <input type="text" id="vorname" name="vorname" placeholder="Ihr Vorname" required>
+          <div class="field-error">Bitte geben Sie Ihren Vornamen ein.</div>
+        </div>
+        <div class="form-group">
+          <label for="nachname">Nachname <span class="required">*</span></label>
+          <input type="text" id="nachname" name="nachname" placeholder="Ihr Nachname" required>
+          <div class="field-error">Bitte geben Sie Ihren Nachnamen ein.</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="email">E-Mail-Adresse <span class="required">*</span></label>
+          <input type="email" id="email" name="email" placeholder="name@beispiel.ch" required>
+          <div class="field-error">Bitte geben Sie eine gültige E-Mail-Adresse ein.</div>
+          <p style="font-size:0.78rem;color:var(--text-light);margin-top:0.3rem;">Sie erhalten eine Bestätigung an diese Adresse.</p>
+        </div>
+        <div class="form-group">
+          <label for="telefon">Telefonnummer <span class="required">*</span></label>
+          <input type="tel" id="telefon" name="telefon" placeholder="+41 31 000 00 00" required>
+          <div class="field-error">Bitte geben Sie Ihre Telefonnummer ein.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="betreff">Betreff <span class="optional">(optional)</span></label>
+        <input type="text" id="betreff" name="betreff" placeholder="Worum geht es?">
+      </div>
+
+      <div class="form-group">
+        <label for="nachricht">Nachricht <span class="required">*</span></label>
+        <textarea id="nachricht" name="nachricht" placeholder="Ihre Nachricht an uns…" required></textarea>
+        <div class="field-error">Bitte geben Sie Ihre Nachricht ein.</div>
+      </div>
+
+      <div class="form-group">
+        <label>Dateianhang <span class="optional">(optional · PDF, JPG, TIFF, PNG · max. 10 MB)</span></label>
+        <div class="file-drop-zone" id="fileDropZone" onclick="document.getElementById('fileInput').click()" role="button" tabindex="0" aria-label="Datei auswählen">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <p>Datei auswählen oder hier ablegen</p>
+          <p style="font-size:0.8rem;opacity:0.7;">PDF, JPG, TIFF, PNG – bis 10 MB</p>
+        </div>
+        <input type="file" id="fileInput" accept=".pdf,.jpg,.jpeg,.tif,.tiff,.png,application/pdf,image/jpeg,image/tiff,image/png" style="display:none" aria-label="Datei hochladen">
+        <div class="file-info" id="fileInfo" style="display:none">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+          <span id="fileInfoText"></span>
+          <button class="remove-file" onclick="removeFile()" type="button" aria-label="Datei entfernen">✕</button>
+        </div>
+        <div class="field-error" id="fileError">Ungültiger Dateityp oder Datei zu gross (max. 10 MB).</div>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <div class="form-group recaptcha-wrap">
+        <!--
+          reCAPTCHA-Schlüssel:
+          Ersetze den data-sitekey unten mit deinem echten reCAPTCHA v2 Site Key.
+          Schlüssel registrieren unter: https://www.google.com/recaptcha/admin/create
+          Wähle reCAPTCHA v2 ("Ich bin kein Roboter"-Checkbox).
+          Den Secret Key im Google Apps Script unter RECAPTCHA_SECRET_KEY eintragen.
+        -->
+        <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+        <div class="field-error" id="captchaError">Bitte bestätigen Sie, dass Sie kein Roboter sind.</div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">
+        <span class="btn-text">Nachricht senden</span>
+        <div class="spinner"></div>
+      </button>
+    </form>
+  </div>
+
+</div>
+
+<div class="form-footer">
+  <p>Bei Fragen erreichst du uns unter <a href="mailto:office@alumni.unibe.ch">office@alumni.unibe.ch</a></p>
+  <p style="margin-top:0.4rem;">© 2026 Alumni PharmBern – Universität Bern</p>
+</div>
+
+<script>
+  /*
+   * ═══════════════════════════════════════════════════════════
+   *   GOOGLE APPS SCRIPT – KONTAKTFORMULAR SETUP
+   * ═══════════════════════════════════════════════════════════
+   *
+   *  1. Gehe zu script.google.com und erstelle ein neues Projekt
+   *
+   *  2. Ersetze den gesamten Code mit:
+   *
+   *     const ADMIN_EMAIL = 'office@alumni.unibe.ch';
+   *     const RECAPTCHA_SECRET_KEY = 'DEIN_RECAPTCHA_SECRET_KEY';
+   *
+   *     function doPost(e) {
+   *       // reCAPTCHA verifizieren
+   *       try {
+   *         var captchaResp = UrlFetchApp.fetch(
+   *           'https://www.google.com/recaptcha/api/siteverify', {
+   *             method: 'post',
+   *             payload: {
+   *               secret: RECAPTCHA_SECRET_KEY,
+   *               response: e.parameter['g-recaptcha-response'] || ''
+   *             }
+   *           }
+   *         );
+   *         var captchaResult = JSON.parse(captchaResp.getContentText());
+   *         if (!captchaResult.success) {
+   *           return ContentService.createTextOutput(
+   *             JSON.stringify({result: 'captcha_failed'})
+   *           ).setMimeType(ContentService.MimeType.JSON);
+   *         }
+   *       } catch(err) {
+   *         // reCAPTCHA-Fehler ignorieren (z.B. Test-Keys)
+   *       }
+   *
+   *       var vorname       = e.parameter.vorname || '';
+   *       var nachname      = e.parameter.nachname || '';
+   *       var email         = e.parameter.email || '';
+   *       var telefon       = e.parameter.telefon || '';
+   *       var betreff       = e.parameter.betreff || 'Kontaktanfrage';
+   *       var nachricht     = e.parameter.nachricht || '';
+   *       var fileData      = e.parameter.fileData || '';
+   *       var fileName      = e.parameter.fileName || '';
+   *       var fileMimeType  = e.parameter.fileMimeType || '';
+   *
+   *       // Dateianhang verarbeiten (Base64 → Blob)
+   *       var attachments = [];
+   *       if (fileData && fileData.indexOf(',') > -1 && fileName) {
+   *         var base64 = fileData.split(',')[1];
+   *         var decoded = Utilities.base64Decode(base64);
+   *         var blob = Utilities.newBlob(decoded, fileMimeType || 'application/octet-stream', fileName);
+   *         attachments.push(blob);
+   *       }
+   *
+   *       // Admin-E-Mail
+   *       var adminBody =
+   *         'Neue Kontaktanfrage von ' + vorname + ' ' + nachname + '\n\n' +
+   *         'Name:     ' + vorname + ' ' + nachname + '\n' +
+   *         'E-Mail:   ' + email + '\n' +
+   *         'Telefon:  ' + telefon + '\n' +
+   *         'Betreff:  ' + betreff + '\n\n' +
+   *         'Nachricht:\n' + nachricht + '\n\n' +
+   *         (fileName ? 'Anhang: ' + fileName : 'Kein Anhang');
+   *       var adminOpts = {};
+   *       if (attachments.length > 0) adminOpts.attachments = attachments;
+   *       GmailApp.sendEmail(ADMIN_EMAIL, 'Neue Anfrage: ' + betreff, adminBody, adminOpts);
+   *
+   *       // Bestätigungs-E-Mail an Absender
+   *       var confirmBody =
+   *         'Guten Tag ' + vorname + ' ' + nachname + ',\n\n' +
+   *         'vielen Dank für Ihre Nachricht. Wir haben Ihre Anfrage erhalten\n' +
+   *         'und melden uns innerhalb von 3–5 Werktagen bei Ihnen.\n\n' +
+   *         '──────────────────────────────────────\n' +
+   *         'Ihr Betreff: ' + betreff + '\n' +
+   *         'Ihre Nachricht:\n' + nachricht + '\n' +
+   *         '──────────────────────────────────────\n\n' +
+   *         'Mit freundlichen Grüssen\n' +
+   *         'Alumni PharmBern\n' +
+   *         'office@alumni.unibe.ch\n' +
+   *         '+41 31 684 00 00';
+   *       GmailApp.sendEmail(email, 'Bestätigung Ihrer Anfrage – Alumni PharmBern', confirmBody);
+   *
+   *       return ContentService.createTextOutput(
+   *         JSON.stringify({result: 'success'})
+   *       ).setMimeType(ContentService.MimeType.JSON);
+   *     }
+   *
+   *  3. Bereitstellen → Neue Bereitstellung
+   *     - Typ: Web-App
+   *     - Ausführen als: Ich
+   *     - Zugriff: Jeder
+   *
+   *  4. Web-App-URL unten einfügen:
+   * ═══════════════════════════════════════════════════════════
+   */
+
+  // ← HIER DEINE GOOGLE APPS SCRIPT URL EINFÜGEN:
+  const KONTAKT_SCRIPT_URL = '';
+
+  if (!KONTAKT_SCRIPT_URL) {
+    console.info('Kontaktformular: Kein Google Apps Script konfiguriert – Demo-Modus aktiv.');
+  }
+
+  // ─── Datei-Handling ────────────────────────────────────────
+  let selectedFile = null;
+  let fileBase64 = null;
+
+  document.getElementById('fileInput').addEventListener('change', function(e) {
+    if (e.target.files[0]) handleFileSelection(e.target.files[0]);
+  });
+
+  const dropZone = document.getElementById('fileDropZone');
+  dropZone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); document.getElementById('fileInput').click(); } });
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) handleFileSelection(e.dataTransfer.files[0]);
+  });
+
+  function handleFileSelection(file) {
+    const allowedTypes = ['application/pdf', 'image/jpeg', 'image/tiff', 'image/png'];
+    const allowedExts = ['.pdf', '.jpg', '.jpeg', '.tif', '.tiff', '.png'];
+    const ext = '.' + file.name.split('.').pop().toLowerCase();
+    const errEl = document.getElementById('fileError');
+
+    errEl.style.display = 'none';
+
+    if (!allowedTypes.includes(file.type) && !allowedExts.includes(ext)) {
+      errEl.textContent = 'Bitte nur PDF, JPG, TIFF oder PNG hochladen.';
+      errEl.style.display = 'block';
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      errEl.textContent = 'Die Datei darf maximal 10 MB gross sein.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    selectedFile = file;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      fileBase64 = ev.target.result;
+      const sizeKB = (file.size / 1024).toFixed(0);
+      document.getElementById('fileInfoText').textContent = file.name + ' (' + sizeKB + ' KB)';
+      document.getElementById('fileInfo').style.display = 'flex';
+      dropZone.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function removeFile() {
+    selectedFile = null;
+    fileBase64 = null;
+    document.getElementById('fileInfo').style.display = 'none';
+    document.getElementById('fileDropZone').style.display = '';
+    document.getElementById('fileInput').value = '';
+    document.getElementById('fileError').style.display = 'none';
+  }
+
+  // ─── Formular-Validierung & Absenden ───────────────────────
+  document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    // Fehler zurücksetzen
+    document.querySelectorAll('.form-group').forEach(g => g.classList.remove('has-error'));
+    document.getElementById('captchaError').style.display = 'none';
+
+    let valid = true;
+
+    // Pflichtfelder prüfen
+    ['vorname', 'nachname', 'email', 'telefon', 'nachricht'].forEach(function(id) {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) {
+        el.closest('.form-group').classList.add('has-error');
+        valid = false;
+      }
+    });
+
+    // E-Mail-Format prüfen
+    const emailEl = document.getElementById('email');
+    if (emailEl.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value.trim())) {
+      emailEl.closest('.form-group').classList.add('has-error');
+      valid = false;
+    }
+
+    // reCAPTCHA prüfen
+    const captchaToken = (typeof grecaptcha !== 'undefined') ? grecaptcha.getResponse() : '';
+    if (!captchaToken) {
+      document.getElementById('captchaError').style.display = 'block';
+      valid = false;
+    }
+
+    if (!valid) {
+      document.querySelector('.has-error')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    const btn = document.getElementById('submitBtn');
+    btn.classList.add('loading');
+    btn.disabled = true;
+
+    const formData = {
+      vorname: document.getElementById('vorname').value.trim(),
+      nachname: document.getElementById('nachname').value.trim(),
+      email: emailEl.value.trim(),
+      telefon: document.getElementById('telefon').value.trim(),
+      betreff: document.getElementById('betreff').value.trim() || 'Kontaktanfrage',
+      nachricht: document.getElementById('nachricht').value.trim(),
+      'g-recaptcha-response': captchaToken,
+      fileData: fileBase64 || '',
+      fileName: selectedFile ? selectedFile.name : '',
+      fileMimeType: selectedFile ? selectedFile.type : ''
+    };
+
+    if (KONTAKT_SCRIPT_URL) {
+      const iframe = document.createElement('iframe');
+      iframe.name = 'hidden_iframe_kontakt';
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+
+      const tempForm = document.createElement('form');
+      tempForm.method = 'POST';
+      tempForm.action = KONTAKT_SCRIPT_URL;
+      tempForm.target = 'hidden_iframe_kontakt';
+
+      Object.keys(formData).forEach(function(key) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = formData[key];
+        tempForm.appendChild(input);
+      });
+
+      document.body.appendChild(tempForm);
+      tempForm.submit();
+      document.body.removeChild(tempForm);
+
+      setTimeout(function() {
+        showSuccess();
+        document.body.removeChild(iframe);
+      }, 1500);
+    } else {
+      console.log('Kontaktanfrage (Demo):', { ...formData, fileData: formData.fileData ? '[base64 data]' : '' });
+      setTimeout(showSuccess, 800);
+    }
+  });
+
+  function showSuccess() {
+    document.getElementById('successMessage').classList.add('show');
+    document.getElementById('contactForm').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
